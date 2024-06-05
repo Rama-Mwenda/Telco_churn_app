@@ -1,6 +1,7 @@
 import streamlit as st 
 import pandas as pd
 import numpy as np 
+from streamlit_lottie import st_lottie
 
 st.title("Hello World")
 st.header("This is my header")
@@ -27,3 +28,7 @@ st.text("Selected: {}".format(level))
 
 number= st.number_input("Enter a number")
 st.write("Your number", number)
+
+
+url= "https://lottiefiles.com/search?q=navigation&category=animations"
+st_lottie(url, key="user")
