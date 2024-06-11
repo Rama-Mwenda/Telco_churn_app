@@ -11,13 +11,13 @@ st.set_page_config(page_title="Predict_page", page_icon="📈", layout="wide")
 
 @st.cache_resource( show_spinner="Model loading...")
 def load_random_model():
-    model= joblib.load('toolkit/random.joblib')
+    model= joblib.load('Models/toolkit/random.joblib')
     return model
 
 
 @st.cache_resource(show_spinner="Model loading...")
 def load_xgb():
-    model= joblib.load('toolkit/xgb.joblib')
+    model= joblib.load('Models/toolkit/xgb.joblib')
     return model
 
 
@@ -36,7 +36,7 @@ def select_model():
     else:
         model= load_xgb()
         
-    encoder= joblib.load('toolkit/encoder.joblib')
+    encoder= joblib.load('Models/toolkit/encoder.joblib')
     
     return model, encoder
 
