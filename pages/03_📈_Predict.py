@@ -17,14 +17,14 @@ def load_random_model():
 
 @st.cache_resource(show_spinner="Model loading...")
 def load_xgb():
-    model= joblib.load('Models/toolkit/xgb.joblib')
+    model=joblib.load('Models/toolkit/xgb.joblib')
     return model
 
 
 ## Create a select model box function
 # @st.cache_resource(show_spinner="Model_loading...")
 def select_model():
-    col1, col2 = st.columns(2)
+    col1,col2 = st.columns(2)
     with col1:
         st.selectbox("Select Model", options=["RandomForest", "Xgboost"], key="selected_model")
         
@@ -32,13 +32,13 @@ def select_model():
         pass
     
     if st.session_state["selected_model"] == "RandomForest":
-        model= load_random_model()
+        model=load_random_model()
     else:
-        model= load_xgb()
+        model=load_xgb()
         
-    encoder= joblib.load('Models/toolkit/encoder.joblib')
+    encoder=joblib.load('Models/toolkit/encoder.joblib')
     
-    return model, encoder
+    return model,encoder
 
 ## Intialize session state
 if 'prediction' not in st.session_state:
@@ -47,7 +47,7 @@ if 'prediction' not in st.session_state:
 if "probability" not in st.session_state:
     st.session_state["probability"] = None
 
-def make_predictions(model, encoder):
+def make_predictions(model,encoder):
     
     gender= st.session_state["gender"]
     seniorcitizen= st.session_state["seniorcitizen"]
@@ -94,22 +94,22 @@ def make_predictions(model, encoder):
     prediction = encoder.inverse_transform([pred])
     
     ## show probability 
-    probability= model.predict_proba(df)
+    probability=model.predict_proba(df)
     
     ## Update session state
-    st.session_state["prediction"]= prediction
-    st.session_state["probability"]= probability
+    st.session_state["prediction"]=prediction
+    st.session_state["probability"]=probability
     
-    return prediction, probability
+    return prediction,probability
     
        
 def display_form():
     
-    model, encoder = select_model()
+    model,encoder = select_model()
     
     with st.form("input-features"):
         
-        col1, col2, col3 = st.columns(3)
+        col1,col2,col3 = st.columns(3)
         
         with col1:
             st.write("#### **PERSONAL INFORMATION 🙍🏽**")
@@ -134,9 +134,9 @@ def display_form():
             st.radio("Do you have streaming tv?", options=["Yes", "No", "No internet service"], key="streamingtv")
             st.radio("Do you have streaming movies?", options=["Yes", "No", "No internet service"], key="streamingmovies")
             st.write("#### **CONTRACT TYPE**")
-            st.radio("Which contract do you have?", options=["Month-to-month", "One_year", "Two_years"], key="contract")
+            st.radio("Which contract do you have?", options=["Month-to-month", "One year", "Two year"], key="contract")
             st.radio("Do you have paperless billing?", options=["Yes", "No"], key="paperlessbilling")
-            st.radio("Do you have payment method?", options=["Electronic check", "Mailed check", "Bank_transfer(automatic)", "Credit_card(automatic)"], key="paymentmethod")
+            st.radio("Do you have payment method?", options=["Electronic check", "Mailed check", "Bank transfer (automatic)", "Credit card (automatic)"], key="paymentmethod")
             st.write("#### **BILLING INFORMATION**")
             st.number_input("Enter your monthly charges?", key="monthlycharges", min_value=1, step=1)
             st.number_input("Enter your total charges?", key="totalcharges", min_value=1, step=1)
@@ -148,15 +148,15 @@ if __name__ == "__main__":
     st.title("Predictions")
     display_form()
     
-    prediction= st.session_state["prediction"]
-    probability= st.session_state["probability"]
+    prediction=st.session_state["prediction"]
+    probability=st.session_state["probability"]
     
     if not prediction:
         st.write("Show predictions")
         st.divider()
-    elif prediction == "Yes":
-        probability_of_yes = probability[0][1]*100
+    elif prediction =="Yes":
+        probability_of_yes=probability[0][1]*100
         st.markdown(f"The customer is likely to leave with a probability of {round(probability_of_yes,2)}%")
     else:
-        probability_of_no = probability[0][0]*100
+        probability_of_no=probability[0][0]*100
         st.markdown(f"The customer is likely to stay with a probability of {round(probability_of_no,2)}%")
