@@ -37,7 +37,7 @@ def eda_dashboard():
         
     with chart2:
         ## plot a barchart
-        bar = px.bar(df, x="churn")
+        bar = px.bar(df, x="churn", title="Churn rate")
         st.plotly_chart(bar)
     
     
