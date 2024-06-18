@@ -60,11 +60,24 @@ def kpi_dashboard():
 
 
 
+
+
 if __name__ == "__main__":
     st.title("Dashboard")
     col1, col2= st.columns(2)
     with col1:
-        pass
+        churn_gender_counts = df.groupby(['gender', 'churn']).size().reset_index(name='count') #Groupby
+        fig = px.bar(churn_gender_counts, x='gender', y='count', color='churn', barmode='group',
+             color_discrete_map={'No': 'darkblue', 'Yes': 'green'}) # Barplot and its settings.
+
+        fig.update_layout(
+        xaxis_title='Gender',
+        yaxis_title='Count',
+        title='Distribution of Churn in Gender') # Barplot layout
+
+        st.plotly_chart(fig) # Display the chart
+    
+    
     with col2:
         st.selectbox("Choose your visualizations",options= ["EDA", "KPIs"], key="slected_dashboard_type")
         
