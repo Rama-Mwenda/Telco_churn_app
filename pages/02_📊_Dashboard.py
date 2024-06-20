@@ -46,7 +46,7 @@ def eda_dashboard(df):
 
     
     
-
+### KPI DASHBOARD
 
 def kpi_dashboard(df):
     st.markdown("### KEY PERFORMANCE INDICATORS")
