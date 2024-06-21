@@ -69,7 +69,7 @@ def make_predictions(model,encoder):
     monthlycharges= st.session_state["monthlycharges"]
     totalcharges= st.session_state["totalcharges"]
     
-    ## Create a dataframe
+     ## Create a dataframe
     data= [[gender, seniorcitizen, partner, 
             dependents, phoneservice, multiplelines, 
             internetservice, onlinesecurity, onlinebackup,tenure, 
@@ -83,11 +83,6 @@ def make_predictions(model,encoder):
     
     df= pd.DataFrame(data, columns=columns)
     
-    df["Prediction_time"]= datetime.date.today()
-    df["model_used"]= st.session_state["selected_model"]
-    
-    # df.to_csv("./Datafiles/history.csv", mode="a", header=not os.path.exists("./Datafiles/history.csv"), index=False)
-    
     ## make predictions
     pred = model.predict(df)
     pred= int(pred[0])
@@ -99,6 +94,21 @@ def make_predictions(model,encoder):
     ## Update session state
     st.session_state["prediction"]=prediction
     st.session_state["probability"]=probability
+    
+    probability_yes = st.session_state["probability"][0][1]*100
+    probability_no = st.session_state["probability"][0][0]*100
+    if st.session_state["prediction"] == "Yes":
+        probability = (round(probability_yes,2))
+    else:
+        probability = (round(probability_no, 2))
+    
+    ## History statistics
+    df["Prediction_time"]= datetime.date.today()
+    df["model_used"]= st.session_state["selected_model"]
+    df["prediction"] = prediction
+    df["probability"] = probability
+    
+    df.to_csv("Datafiles/history.csv", mode="a", header=not os.path.exists("Datafiles/history.csv"), index=False)
     
     return prediction,probability
     
