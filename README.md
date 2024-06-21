@@ -86,8 +86,9 @@ Features
 - **View proprietory data loaded in real-time form the remote server**
 - **Predictions are save for further analysis in the future and users can view the history of their prediction input values**
 
-## 💻 Getting Started <a name="getting-started"></a>
+https://github.com/Creative-Parasite/Telco_churn_app/assets/160054808/62641367-e458-4719-bf43-865127dbae9b
 
+## 💻 Getting Started <a name="getting-started"></a>
 
 To get a local copy up and running, follow these steps.
 
