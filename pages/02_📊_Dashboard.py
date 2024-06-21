@@ -100,9 +100,7 @@ if __name__ == "__main__":
                     color="churn", title="Impact of a partner relationship",
                 color_discrete_map={'No': 'mediumseagreen', 'Yes': 'mediumvioletred'})
         
-        st.plotly_chart(pie)
-        
-        
+        st.plotly_chart(pie)  
     
     ## Relationship between monthly charges and churn rate
     with col2:
@@ -124,12 +122,6 @@ if __name__ == "__main__":
                         color_discrete_sequence=["mediumseagreen", "mediumvioletred"])
         
         st.plotly_chart(payment) # Display the chart
-
-if __name__ == "__main__":
-    st.title("Dashboard")
-    col1, col2 = st.columns(2)
-    with col1:
-        pass
     
     with col2:
         st.selectbox("Choose your visualizations",options= ["EDA", "KPIs"], key="selected_dashboard_type")

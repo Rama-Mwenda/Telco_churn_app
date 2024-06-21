@@ -136,8 +136,7 @@ To run the project, execute the following command:
 
 ```
 - A webpage opens up to view the app
-- Login to the app with `username= Evalyne Kamuri` and `password:65748`
-- Finally test a prediction by clicking on the predicitons page
+- Test a prediction by clicking on the predicitons page
 
 ## ☑️ Contributing <a name="contributing"></a>
 Contributions, features and issues are welcome .
