@@ -6,7 +6,6 @@ import seaborn as sns
 import matplotlib.pyplot as plt 
 import plotly.express as px
 import plotly.figure_factory as ff
-from Utils.authenticator import app
 
 st.set_page_config(
     page_title="Dashboard Page", 
@@ -28,9 +27,11 @@ def load_data():
 
 df = load_data()
 
-def eda_dashboard():
+def eda_dashboard(df):
     st.markdown("#### EXPLORATORY DASHBOARD")
     
+    chart1, chart2 = st.columns(spec=[5,3])
+    with chart1:
     ## plot a histogram
     fig= px.histogram(df, x=['tenure', 'monthlycharges'], 
                           color_discrete_map={'tenure':'lightsalmon', 'monthlycharges':'lightblue'}, 
@@ -47,36 +48,20 @@ def eda_dashboard():
         ## plot a internet service chart
         bar = px.pie(df, names= "internetservice", title="Internet service providers")
         st.plotly_chart(bar)
-        
-        ## plot a contract chart
-        pie = px.pie(df, names='contract', title="Contract rate")
-        st.plotly_chart(pie)
     
-        
-    with chart2:
-        ## Plot by contract and monthly charges
-        violin = px.violin(df, x="monthlycharges", y="contract", color_discrete_sequence=['lightsalmon', 'lightskyblue', "blue"], 
-                           title="Distribution of monthly charges by contract")
-        st.plotly_chart(violin)
-        
-        ## Plot by tenure and gender
-        violin = px.violin(df, x="tenure", y="gender", color_discrete_sequence=["lightsalmon", "lightskyblue"],
-                           title="Lifespan of customer by gender")
-        st.plotly_chart(violin)
-        
-        ## Plot payment method by monthly charges
-        violin = px.violin(df, x="monthlycharges", y="paymentmethod", color_discrete_sequence=["lightsalmon", "lightskyblue"], 
-                           title="Distribution of monthlycharges by payment")
-        st.plotly_chart(violin)
-        
-         
-    # with chart3:
-    #     pair = px.scatter(df, x='partner', y= 'monthlycharges', color='churn')
-    #     st.plotly_chart(pair)
-        
+    
+
 
 def kpi_dashboard():
     st.markdown("### KEY PERFORMANCE INDICATORS")
+    st.markdown("#### KEY METRICS")
+    
+
+    # Compute key metrics from the DataFrame
+    avg_tenure = df['tenure'].mean()
+    avg_monthly_charges = df['monthlycharges'].mean()
+    churn_rate = df['churn'].value_counts(normalize=True).get('Yes', 0) * 100
+    contract_count = df['contract'].value_counts()
     
     st.markdown("KEY METRICS")
     Kpi1, Kpi2 = st.columns(2)
@@ -84,7 +69,20 @@ def kpi_dashboard():
     Kpi2.metric("Average_monthly_charges", value= 65.09, delta= +18.0)
     
     ## plot gender bar chart
-    with Kpi1:
+    chart=px.bar(df, x="gender", y="monthlycharges", color="churn")
+    st.plotly_chart(chart)
+
+
+
+
+
+
+
+
+if __name__ == "__main__":
+    st.title("Dashboard")
+    col1, col2= st.columns(2)
+    with col1:
         churn_gender_counts = df.groupby(['gender', 'churn']).size().reset_index(name='count') #Groupby
         fig = px.bar(churn_gender_counts, x='gender', y='count', color='churn', barmode='group',
                 color_discrete_map={'No': 'mediumseagreen', 'Yes': 'mediumvioletred'}) # Barplot and its settings.
@@ -134,10 +132,10 @@ if __name__ == "__main__":
         pass
     
     with col2:
-        st.selectbox("Choose your visualizations",options= ["EDA", "KPIs"], key="slected_dashboard_type")
+        st.selectbox("Choose your visualizations",options= ["EDA", "KPIs"], key="selected_dashboard_type")
         
-    if st.session_state["slected_dashboard_type"] == "EDA":
-        eda_dashboard()
+    if st.session_state["selected_dashboard_type"] == "EDA":
+        eda_dashboard(df)
     else:
-        kpi_dashboard()
+        kpi_dashboard(df)
         
