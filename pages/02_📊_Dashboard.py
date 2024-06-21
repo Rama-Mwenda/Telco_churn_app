@@ -33,10 +33,10 @@ def eda_dashboard(df):
     chart1, chart2 = st.columns(spec=[5,3])
     with chart1:
     ## plot a histogram
-    fig= px.histogram(df, x=['tenure', 'monthlycharges'], 
-                          color_discrete_map={'tenure':'lightsalmon', 'monthlycharges':'lightblue'}, 
-                          title="Univariate analysis")
-    st.plotly_chart(fig)
+        fig= px.histogram(df, x=['tenure', 'monthlycharges'], 
+                            color_discrete_map={'tenure':'lightsalmon', 'monthlycharges':'lightblue'}, 
+                            title="Univariate analysis")
+        st.plotly_chart(fig)
     
     chart1, chart2 = st.columns(spec=[3,3])
     with chart1:
@@ -105,7 +105,7 @@ if __name__ == "__main__":
         
     
     ## Relationship between monthly charges and churn rate
-    with Kpi2:
+    with col2:
         charges= px.bar(df, x='monthlycharges', y='churn', color="churn", 
                         title='Impact of monthly charges on churn rate',
                         color_discrete_sequence=["mediumseagreen", "mediumvioletred"])
