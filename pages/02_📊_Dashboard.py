@@ -25,7 +25,7 @@ def eda_dashboard():
                             title="Univariate analysis")
     st.plotly_chart(fig)
     
-    chart1, chart2 = st.columns(spec=[3,3])
+    chart1, chart2 = st.columns(spec=[4,4])
     with chart1:
         ## plot a churn chart
         pie = px.pie(df, names='churn', title="Churn rate", color_discrete_sequence=['lightsalmon', 'lightskyblue'])
@@ -46,15 +46,15 @@ def eda_dashboard():
                            )
         st.plotly_chart(violin)
         
-        ## Distribution of internet services by monthly charges
-        violin = px.violin(df, x='monthlycharges', y='internetservice', title='Distribution of monthlycharges by internet services',
-                           color_discrete_sequence=['lightsalmon', 'lightskyblue'])
-        st.plotly_chart(violin)
-        
         ## Distribution of contract by tenure
         violin = px.violin(df, x='monthlycharges', y='paymentmethod', title='Distribution of monthly charges by paymentmethod',
                            color_discrete_sequence=["lightsalmon", "lightskyblue"])
         st.plotly_chart(violin)
+        
+        ## Distribution of internet services by monthly charges
+        box = px.box(df, x='monthlycharges', y='internetservice', title='Distribution of monthlycharges by internet services',
+                           color_discrete_sequence=['lightsalmon', 'lightskyblue'])
+        st.plotly_chart(box)
     
     ## Correlation matrix of numeric columns
     numeric_columns = df.select_dtypes(include=['int64','Float64']).columns
