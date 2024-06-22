@@ -78,5 +78,5 @@ If you have any enquiries, feel free to reach out to us:
     st.link_button("LINKED IN", 'www.linkedin.com/in/evalyne-kamuri')
     lIVE_DEMO = st.button("LIVE DEMO")
     if lIVE_DEMO:
-        media = open("C:/Users/ADMIN/Downloads/CHURN CIPHER.mp4", "rb")
+        media = open("assets/CHURN CIPHER.mp4", "rb")
         st.video(media,format="mp4")
