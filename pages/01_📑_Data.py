@@ -1,7 +1,6 @@
 import streamlit as st
 import pandas as pd
-import numpy as np
-import pyodbc 
+import numpy as np 
 from Utils.features import markdown_table
 
 st.set_page_config(page_title="Data Page", page_icon="📑", layout="wide")
@@ -23,40 +22,8 @@ with col2:
     pass
 
 
-## create a connection to a database
-@st.cache_resource(show_spinner="connecting to database...")
-def init_connection():
-    connection_string = (
-        "DRIVER={SQL Server};"
-        "SERVER=" + st.secrets['SERVER'] + ";"
-        "DATABASE=" + st.secrets['DATABASE'] + ";"
-        "UID=" + st.secrets['USERNAME'] + ";"
-        "PWD=" + st.secrets['PASSWORD']
-    )
-    return pyodbc.connect(connection_string)
- 
-conn = init_connection()
-
-@st.cache_data(show_spinner="Running query...")
-def running_query(query):
-    with conn.cursor() as cursor:
-        cursor.execute(query)
-        rows = cursor.fetchall()
-        columns = [column[0] for column in cursor.description]
-        df = pd.DataFrame.from_records(rows, columns=columns)
-    return df
-
-
-def get_all_columns():
-    sql_query = "SELECT * FROM dbo.LP2_Telco_churn_first_3000"
-    df = running_query(sql_query)
-    return df
-
-
 ## load dataset
-data1= get_all_columns()
-data2 = pd.read_csv("Datafiles\LP2_Telco-churn-second-2000.csv")
-df= pd.concat([data1, data2], axis=0)
+df = pd.read_csv("Datafiles/new_data.csv")
 
 
 ## Identify columns in dataset
@@ -89,7 +56,6 @@ with container:
                 st.write(df[numerical_columns])
 
 
-
     with col2:
     
         st.markdown("""
@@ -100,13 +66,13 @@ with container:
         </style>
         """, unsafe_allow_html=True)
     
-        service_attributes=df[['PhoneService', 'MultipleLines', 'InternetService','OnlineSecurity',
-                    'OnlineBackup', 'DeviceProtection','TechSupport'
+        service_attributes=df[['phoneservice', 'multiplelines', 'internetservice','onlinesecurity',
+                    'onlinebackup', 'deviceprotection','techsupport'
                     ]]
     
-        contracts=df[["Contract", "PaperlessBilling","PaymentMethod"]]
+        contracts=df[["contract", "paperlessbilling","paymentmethod"]]
     
-        personal_attributes=df[["gender", "Partner", "Dependents"]]
+        personal_attributes=df[["gender", "partner", "dependents"]]
     
         container= st.container(height=500, border=False)
     
