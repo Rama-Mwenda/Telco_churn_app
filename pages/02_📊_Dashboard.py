@@ -86,7 +86,7 @@ def kpi_dashboard():
         fig.update_layout(
             xaxis_title='Gender',
             yaxis_title='Count',
-            title='Distribution of Churn in Gender') # Barplot layout
+            title='Distribution of Churn by Gender') # Barplot layout
 
         st.plotly_chart(fig) # Display the chart
     
@@ -96,7 +96,22 @@ def kpi_dashboard():
                     color="churn", title="Impact of a partner relationship",
                 color_discrete_map={'No': 'mediumseagreen', 'Yes': 'mediumvioletred'})
         
-        st.plotly_chart(pie)  
+        st.plotly_chart(pie)
+        
+        # Group by seniorcitizen and churn
+        churn_Senior_citizen = df.groupby(['seniorcitizen', 'churn']).size().reset_index(name='totalcount')
+
+        # Create a bar plot
+        fig = px.bar(churn_Senior_citizen, 
+             x=['seniorcitizen', 'churn'],  # x-axis: seniorcitizen and churn
+             y='totalcount',  # y-axis: total count
+             color='churn',  # color by churn
+             barmode='group',  # group bars by seniorcitizen
+             title='Churn by Senior Citizen',  # title
+             labels={'seniorcitizen': 'Senior Citizen', 'churn': 'Churn', 'totalcount': 'Total Count'})  # axis labels
+
+        # Show the plot
+        st.plotly_chart(fig)  
     
     ## Relationship between monthly charges and churn rate
     with Kpi2:
