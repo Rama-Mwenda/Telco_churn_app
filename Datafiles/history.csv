@@ -1,0 +1,3 @@
+gender,seniorcitizen,partner,dependents,phoneservice,multiplelines,internetservice,onlinesecurity,onlinebackup,tenure,deviceprotection,techsupport,streamingtv,streamingmovies,contract,paperlessbilling,paymentmethod,monthlycharges,totalcharges,Prediction_time,model_used,prediction,probability
+Male,1,Yes,Yes,Yes,Yes,DSL,Yes,Yes,1,Yes,Yes,Yes,Yes,Month-to-month,Yes,Electronic check,1,1,2024-06-18,RandomForest,No,59.01
+Female,0,Yes,No,Yes,Yes,DSL,Yes,Yes,30,Yes,Yes,Yes,Yes,Month-to-month,Yes,Electronic check,500,4500,2024-06-18,RandomForest,No,71.64
